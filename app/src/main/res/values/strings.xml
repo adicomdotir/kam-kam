@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">کم‌کم</string>
+
+    <string name="home_settings">تنظیمات</string>
+    <string name="home_of_target">از %1$s نخ امروز</string>
+    <string name="home_today_cigarettes">نخ امروز</string>
+    <string name="home_over_target">از هدف امروز رد شدی، فردا دوباره.</string>
+    <string name="home_no_plan_hint">هنوز برنامه‌ای نداری. با یک هدف تدریجی شروع کن.</string>
+    <string name="home_create_plan">ساخت برنامه</string>
+    <string name="home_since_last">زمان از آخرین نخ</string>
+    <string name="home_log_smoke">ثبت یک نخ</string>
+    <string name="home_craving">هوس دارم</string>
+    <string name="home_today_logs">ثبت‌های امروز</string>
+    <string name="home_add_custom_time">افزودن با زمان دلخواه</string>
+    <string name="home_edit_log">ویرایش ثبت %1$s</string>
+    <string name="home_delete_log">حذف ثبت %1$s</string>
+    <string name="home_empty_title">امروز هنوز نخی ثبت نشده</string>
+    <string name="home_empty_body">هر نخی که ثبت کنی، اینجا نشان داده می‌شود.</string>
+
+    <string name="sheet_logged">ثبت شد · %1$s</string>
+    <string name="sheet_subtitle">اگر دوست داری، جزئیات را اضافه کن</string>
+    <string name="sheet_undo">بازگردانی</string>
+    <string name="sheet_trigger">محرک</string>
+    <string name="sheet_intensity">شدت میل</string>
+    <string name="sheet_save">ذخیره</string>
+    <string name="sheet_skip">رد کردن</string>
+</resources>
