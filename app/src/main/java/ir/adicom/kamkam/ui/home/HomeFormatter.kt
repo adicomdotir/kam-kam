@@ -3,10 +3,40 @@ package ir.adicom.kamkam.ui.home
 import android.content.Context
 import android.icu.text.SimpleDateFormat
 import android.icu.util.ULocale
+import android.os.Build
+import androidx.annotation.RequiresApi
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import ir.adicom.kamkam.R
 import ir.adicom.kamkam.data.entity.Trigger
+import java.time.Clock
 import java.util.Date
+import javax.inject.Singleton
 
+
+@Module
+@InstallIn(SingletonComponent::class)
+object HomeFormatterModule {
+    @Provides
+    @Singleton
+    fun provideHomeFormatter(
+        @ApplicationContext context: Context
+    ): HomeFormatter {
+        return AndroidHomeFormatter(context)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    @Provides
+    @Singleton
+    fun provideClock(
+        @ApplicationContext context: Context
+    ): Clock {
+        return java.time.Clock.systemDefaultZone()
+    }
+}
 
 interface HomeFormatter {
     fun date(epochMillis: Long): String

@@ -4,7 +4,9 @@ package ir.adicom.kamkam.data.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import ir.adicom.kamkam.data.dao.CravingLogDao
+import ir.adicom.kamkam.data.dao.ReductionPlanDao
 import ir.adicom.kamkam.data.dao.SmokeLogDao
+import ir.adicom.kamkam.data.dao.TriggerDao
 import ir.adicom.kamkam.data.entity.CravingLog
 import ir.adicom.kamkam.data.entity.ReductionPlan
 import ir.adicom.kamkam.data.entity.SmokeLog

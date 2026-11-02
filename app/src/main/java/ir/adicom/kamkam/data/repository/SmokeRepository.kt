@@ -3,8 +3,9 @@ package ir.adicom.kamkam.data.repository
 import ir.adicom.kamkam.data.dao.SmokeLogDao
 import ir.adicom.kamkam.data.entity.SmokeLog
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class SmokeRepository(private val dao: SmokeLogDao) {
+class SmokeRepository @Inject constructor(private val dao: SmokeLogDao) {
     fun observeBetween(from: Long, to: Long): Flow<List<SmokeLog>> = dao.observeBetween(from, to)
     fun observeLastTimestamp(): Flow<Long?> = dao.observeLastTimestamp()
 

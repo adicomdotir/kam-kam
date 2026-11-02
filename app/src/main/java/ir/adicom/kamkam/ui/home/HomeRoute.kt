@@ -1,6 +1,5 @@
 package ir.adicom.kamkam.ui.home
 
-import android.app.Application
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.padding
@@ -14,10 +13,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import ir.adicom.kamkam.R
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -29,9 +27,7 @@ fun HomeRoute(
     onOpenSettings: () -> Unit,
     onOpenCreatePlan: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: HomeViewModel = viewModel(
-        factory = HomeViewModel.factory(LocalContext.current.applicationContext as Application)
-    ),
+    viewModel: HomeViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val snackbarHost = remember { SnackbarHostState() }

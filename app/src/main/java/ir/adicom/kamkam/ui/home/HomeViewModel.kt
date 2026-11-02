@@ -33,6 +33,7 @@ import kotlinx.coroutines.launch
 import java.time.Clock
 import java.time.LocalDate
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 /** رویدادهای یک‌باره: ناوبری و Snackbar */
 sealed interface HomeEvent {
@@ -46,7 +47,7 @@ sealed interface HomeEvent {
 
 @RequiresApi(Build.VERSION_CODES.O)
 @HiltViewModel
-class HomeViewModel(
+class HomeViewModel @Inject constructor(
     private val smoke: SmokeRepository,
     triggers: TriggerRepository,
     plans: PlanRepository,
