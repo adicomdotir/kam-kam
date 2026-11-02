@@ -37,3 +37,4 @@ interface CravingLogDao {
     )
     fun observeResistedCountBetween(from: Long, to: Long): Flow<Int>
 }
+

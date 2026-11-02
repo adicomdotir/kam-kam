@@ -24,4 +24,22 @@
     <string name="sheet_intensity">شدت میل</string>
     <string name="sheet_save">ذخیره</string>
     <string name="sheet_skip">رد کردن</string>
+
+    <string name="home_log_deleted">ثبت حذف شد</string>
+    <string name="home_undo">بازگردانی</string>
+
+    <string name="since_now">همین الان</string>
+    <string name="since_minutes">%1$s دقیقه</string>
+    <string name="since_hours">%1$s ساعت</string>
+    <string name="since_hours_minutes">%1$s ساعت و %2$s دقیقه</string>
+    <string name="plan_stage">مرحله‌ی %1$s</string>
+
+    <string name="trigger_stress">استرس</string>
+    <string name="trigger_coffee">قهوه</string>
+    <string name="trigger_after_meal">بعد غذا</string>
+    <string name="trigger_social">جمع دوستانه</string>
+    <string name="trigger_boredom">بی‌حوصلگی</string>
+    <string name="trigger_driving">رانندگی</string>
+    <string name="trigger_waking_up">بیدار شدن</string>
+    <string name="trigger_unknown">بدون برچسب</string>
 </resources>

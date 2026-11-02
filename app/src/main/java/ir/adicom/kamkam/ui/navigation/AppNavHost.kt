@@ -11,6 +11,7 @@ import ir.adicom.kamkam.ui.home.HomeScreen
 import ir.adicom.kamkam.ui.home.HomeUiState
 import ir.adicom.kamkam.ui.home.LogItemUi
 import ir.adicom.kamkam.ui.home.PlanUi
+import ir.adicom.kamkam.ui.home.PostLogSheetUi
 import ir.adicom.kamkam.ui.splash.SplashScreen
 
 @OptIn(ExperimentalMaterial3Api::class)

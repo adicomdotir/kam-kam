@@ -10,9 +10,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import ir.adicom.kamkam.data.dao.CravingLogDao
-import ir.adicom.kamkam.data.dao.ReductionPlanDao
 import ir.adicom.kamkam.data.dao.SmokeLogDao
-import ir.adicom.kamkam.data.dao.TriggerDao
 import ir.adicom.kamkam.data.database.AppDatabase
 import javax.inject.Singleton
 

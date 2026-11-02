@@ -7,8 +7,6 @@ import androidx.room.Update
 import ir.adicom.kamkam.data.entity.SmokeLog
 import kotlinx.coroutines.flow.Flow
 
-data class TriggerCount(val triggerId: Long, val count: Int)
-
 @Dao
 interface SmokeLogDao {
     @Insert
@@ -16,6 +14,9 @@ interface SmokeLogDao {
 
     @Update
     suspend fun update(log: SmokeLog)
+
+    @Query("UPDATE smoke_logs SET triggerId = :triggerId, intensity = :intensity WHERE id = :id")
+    suspend fun updateDetails(id: Long, triggerId: Long?, intensity: Int?)
 
     @Query("SELECT * FROM smoke_logs WHERE id = :id")
     suspend fun getById(id: Long): SmokeLog?
@@ -53,6 +54,15 @@ interface SmokeLogDao {
     )
     fun observeTimestampsBetween(from: Long, to: Long): Flow<List<Long>>
 
+    @Query("SELECT MIN(timestamp) FROM smoke_logs WHERE deletedAt IS NULL")
+    suspend fun getFirstTimestamp(): Long?
+
+    @Query(
+        "SELECT timestamp FROM smoke_logs " +
+                "WHERE deletedAt IS NULL AND timestamp >= :from AND timestamp < :to"
+    )
+    suspend fun getTimestampsBetween(from: Long, to: Long): List<Long>
+
     /** برای U7 (بعد از MVP) */
     @Query(
         "SELECT triggerId, COUNT(*) AS count FROM smoke_logs " +
@@ -62,3 +72,5 @@ interface SmokeLogDao {
     )
     fun observeTriggerCounts(from: Long, to: Long): Flow<List<TriggerCount>>
 }
+
+data class TriggerCount(val triggerId: Long, val count: Int)
