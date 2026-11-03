@@ -323,13 +323,17 @@ fun PostLogSheetContent(
 
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text(stringResource(R.string.sheet_trigger), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                sheet.triggers.forEach { t ->
-                    FilterChip(
-                        selected = t.id == sheet.selectedTriggerId,
-                        onClick = { onTriggerSelected(t.id) },
-                        label = { Text(t.label) },
-                    )
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                sheet.triggers.chunked(3).forEach { rowItems ->
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        rowItems.forEach { t ->
+                            FilterChip(
+                                selected = t.id == sheet.selectedTriggerId,
+                                onClick = { onTriggerSelected(t.id) },
+                                label = { Text(t.label) },
+                            )
+                        }
+                    }
                 }
             }
         }
