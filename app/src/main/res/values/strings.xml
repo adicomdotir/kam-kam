@@ -62,4 +62,18 @@
     <string name="plan_stage_row">مرحله‌ی %1$s</string>
     <string name="plan_extend_note">هر وقت لازم شد، می‌توانی مرحله را تمدید کنی.</string>
     <string name="plan_start">شروع برنامه از امروز</string>
+
+    <string name="edit_log_title">ویرایش ثبت</string>
+    <string name="add_log_title">افزودن ثبت</string>
+    <string name="edit_close">بستن</string>
+    <string name="edit_day">روز</string>
+    <string name="edit_time">ساعت</string>
+    <string name="edit_time_change">تغییر ساعت</string>
+    <string name="edit_note">یادداشت (اختیاری)</string>
+    <string name="edit_note_placeholder">مثلاً: بعد از جلسه</string>
+    <string name="edit_delete">حذف این ثبت</string>
+    <string name="day_today">امروز</string>
+    <string name="day_yesterday">دیروز</string>
+    <string name="time_picker_ok">تأیید</string>
+    <string name="time_picker_cancel">انصراف</string>
 </resources>

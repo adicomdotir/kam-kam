@@ -41,6 +41,7 @@ object HomeFormatterModule {
 interface HomeFormatter {
     fun date(epochMillis: Long): String
     fun time(epochMillis: Long): String
+    fun dayLabel(offset: Int, dayStartMillis: Long): String
     fun sinceLast(minutes: Long): String
     fun stage(index: Int): String
     fun triggerLabel(trigger: Trigger): String
@@ -56,6 +57,12 @@ class AndroidHomeFormatter(private val context: Context) : HomeFormatter {
 
     override fun time(epochMillis: Long): String =
         SimpleDateFormat("HH:mm", locale).format(Date(epochMillis))
+
+    override fun dayLabel(offset: Int, dayStartMillis: Long): String = when (offset) {
+        0 -> context.getString(R.string.day_today)
+        1 -> context.getString(R.string.day_yesterday)
+        else -> SimpleDateFormat("d MMMM", locale).format(Date(dayStartMillis))
+    }
 
     override fun sinceLast(minutes: Long): String {
         val h = (minutes / 60).toInt()

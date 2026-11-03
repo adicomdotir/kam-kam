@@ -4,19 +4,20 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import ir.adicom.kamkam.ui.home.HomeActions
+import androidx.navigation.navArgument
+import ir.adicom.kamkam.ui.edit.EditLogRoute
 import ir.adicom.kamkam.ui.home.HomeRoute
-import ir.adicom.kamkam.ui.home.HomeScreen
-import ir.adicom.kamkam.ui.home.HomeUiState
-import ir.adicom.kamkam.ui.home.LogItemUi
-import ir.adicom.kamkam.ui.home.PlanUi
-import ir.adicom.kamkam.ui.home.PostLogSheetUi
 import ir.adicom.kamkam.ui.plan.CreatePlanRoute
 import ir.adicom.kamkam.ui.splash.SplashScreen
+
+private const val KEY_DELETED_LOG = "deleted_log_id"
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
@@ -28,18 +29,27 @@ fun AppNavHost(
         navController = navController,
         startDestination = Screen.Splash.route
     ) {
-        composable(Screen.Home.route) {
+        composable(Screen.Home.route) { entry ->
+            val deleted by entry.savedStateHandle
+                .getStateFlow<Long?>(KEY_DELETED_LOG, null)
+                .collectAsStateWithLifecycle()
+
             HomeRoute(
-                onOpenEdit = {  },
+                onOpenEdit = {
+                    navController.navigate(Screen.EditLog.createRoute(it))
+                },
                 onOpenCraving = {},
-                onOpenAddCustomTime = {  },
+                onOpenAddCustomTime = {
+                    navController.navigate(Screen.EditLog.createRoute(0L))
+                },
+                deletedLogId = deleted,
                 onOpenSettings = {},
                 onOpenCreatePlan = {
                     navController.navigate(Screen.CreatePlan.route)
                 },
             )
         }
-        
+
 
         composable(
             Screen.Splash.route
@@ -65,6 +75,21 @@ fun AppNavHost(
                 onCreated = {
                     navController.popBackStack()
                 },
+            )
+        }
+
+        composable(
+            route = Screen.EditLog.route,
+            arguments = listOf(navArgument("logId") { type = NavType.LongType }),
+        ) {
+            EditLogRoute(
+                onClose = {
+                    navController.popBackStack()
+                },
+                onDeleted = { id ->
+                    navController.previousBackStackEntry?.savedStateHandle?.set(KEY_DELETED_LOG, id)
+                    navController.popBackStack()
+                }
             )
         }
     }

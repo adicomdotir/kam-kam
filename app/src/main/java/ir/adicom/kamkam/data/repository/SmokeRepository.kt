@@ -19,6 +19,13 @@ class SmokeRepository @Inject constructor(private val dao: SmokeLogDao) {
     fun observeLastTimestamp(): Flow<Long?> = dao.observeLastTimestamp()
 
     suspend fun log(timestamp: Long): Long = dao.insert(SmokeLog(timestamp = timestamp))
+
+    suspend fun getById(id: Long): SmokeLog? = dao.getById(id)
+
+    /** id == 0 یعنی ثبت جدید */
+    suspend fun save(log: SmokeLog): Long =
+        if (log.id == 0L) dao.insert(log) else { dao.update(log); log.id }
+
     suspend fun updateDetails(id: Long, triggerId: Long?, intensity: Int?) =
         dao.updateDetails(id, triggerId, intensity)
 

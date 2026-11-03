@@ -26,6 +26,8 @@ fun HomeRoute(
     onOpenAddCustomTime: () -> Unit,
     onOpenSettings: () -> Unit,
     onOpenCreatePlan: () -> Unit,
+    deletedLogId: Long? = null,
+    onDeletedLogHandled: () -> Unit = {},
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
@@ -33,6 +35,18 @@ fun HomeRoute(
     val snackbarHost = remember { SnackbarHostState() }
     val deletedMessage = stringResource(R.string.home_log_deleted)
     val undoLabel = stringResource(R.string.home_undo)
+
+    // حذفی که در صفحه‌ی ویرایش انجام شده؛ همان Snackbar بازگردانی
+    LaunchedEffect(deletedLogId) {
+        val id = deletedLogId ?: return@LaunchedEffect
+        val result = snackbarHost.showSnackbar(
+            message = deletedMessage,
+            actionLabel = undoLabel,
+            duration = SnackbarDuration.Short,
+        )
+        if (result == SnackbarResult.ActionPerformed) viewModel.onUndoDelete(id)
+        onDeletedLogHandled()
+    }
 
     LaunchedEffect(viewModel) {
         viewModel.events.collect { event ->
