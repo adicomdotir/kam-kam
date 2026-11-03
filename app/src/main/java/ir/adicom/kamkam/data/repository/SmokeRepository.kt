@@ -1,8 +1,17 @@
 package ir.adicom.kamkam.data.repository
 
+import android.os.Build
+import androidx.annotation.RequiresApi
+import ir.adicom.kamkam.data.SuggestedBaseline
 import ir.adicom.kamkam.data.dao.SmokeLogDao
 import ir.adicom.kamkam.data.entity.SmokeLog
+import ir.adicom.kamkam.data.startMillis
+import ir.adicom.kamkam.data.suggestBaseline
 import kotlinx.coroutines.flow.Flow
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.temporal.ChronoUnit
 import javax.inject.Inject
 
 class SmokeRepository @Inject constructor(private val dao: SmokeLogDao) {
@@ -16,5 +25,15 @@ class SmokeRepository @Inject constructor(private val dao: SmokeLogDao) {
     suspend fun softDelete(id: Long, now: Long) = dao.softDelete(id, now)
     suspend fun restore(id: Long) = dao.restore(id)
     suspend fun purgeDeletedBefore(before: Long) = dao.purgeDeletedBefore(before)
-}
 
+    /** میانگین روزانه‌ی حداکثر ۷ روز اول ثبت (روز جاری هم حساب می‌شود). */
+    @RequiresApi(Build.VERSION_CODES.O)
+    suspend fun suggestedBaseline(today: LocalDate, zone: ZoneId): SuggestedBaseline? {
+        val first = dao.firstTimestamp() ?: return null
+        val startDate = Instant.ofEpochMilli(first).atZone(zone).toLocalDate()
+        val days = (ChronoUnit.DAYS.between(startDate, today).toInt() + 1).coerceIn(1, 7)
+        val from = startDate.startMillis(zone)
+        val to = startDate.plusDays(days.toLong()).startMillis(zone)
+        return suggestBaseline(dao.countBetween(from, to), days)
+    }
+}

@@ -7,4 +7,7 @@ import javax.inject.Inject
 
 class PlanRepository @Inject constructor(private val dao: ReductionPlanDao) {
     fun observeActive(): Flow<ReductionPlan?> = dao.observeActive()
+
+    /** برنامه‌ی فعال قبلی غیرفعال می‌شود. */
+    suspend fun start(plan: ReductionPlan): Long = dao.replaceActive(plan)
 }

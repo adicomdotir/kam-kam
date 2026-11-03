@@ -43,6 +43,15 @@ interface SmokeLogDao {
     )
     fun observeCountBetween(from: Long, to: Long): Flow<Int>
 
+    @Query("SELECT MIN(timestamp) FROM smoke_logs WHERE deletedAt IS NULL")
+    suspend fun firstTimestamp(): Long?
+
+    @Query(
+        "SELECT COUNT(*) FROM smoke_logs " +
+                "WHERE deletedAt IS NULL AND timestamp >= :from AND timestamp < :to"
+    )
+    suspend fun countBetween(from: Long, to: Long): Int
+
     @Query("SELECT MAX(timestamp) FROM smoke_logs WHERE deletedAt IS NULL")
     fun observeLastTimestamp(): Flow<Long?>
 

@@ -42,4 +42,24 @@
     <string name="trigger_driving">رانندگی</string>
     <string name="trigger_waking_up">بیدار شدن</string>
     <string name="trigger_unknown">بدون برچسب</string>
+
+    <string name="plan_title">ساخت برنامه‌ی کاهش</string>
+    <string name="plan_back">بازگشت</string>
+    <string name="plan_intro">هر چند روز یک‌بار، چند نخ کمتر. بدون عجله و بدون فشار.</string>
+    <string name="plan_baseline">خط پایه</string>
+    <string name="plan_baseline_hint_data">میانگین %1$s روز اول ثبتت</string>
+    <string name="plan_baseline_hint_manual">تعداد معمول روزانه‌ات را بگذار</string>
+    <string name="plan_step_size">کاهش در هر مرحله</string>
+    <string name="plan_step_size_hint">نخ کمتر</string>
+    <string name="plan_step_days">طول هر مرحله</string>
+    <string name="plan_step_days_hint">روز</string>
+    <string name="plan_final_target">هدف نهایی</string>
+    <string name="plan_final_target_hint">می‌توانی بالاتر از صفر بگذاری</string>
+    <string name="plan_decrease">کم کردن %1$s</string>
+    <string name="plan_increase">زیاد کردن %1$s</string>
+    <string name="plan_preview">پیش‌نمایش</string>
+    <string name="plan_weeks_to_goal">حدود %1$s هفته تا هدف</string>
+    <string name="plan_stage_row">مرحله‌ی %1$s</string>
+    <string name="plan_extend_note">هر وقت لازم شد، می‌توانی مرحله را تمدید کنی.</string>
+    <string name="plan_start">شروع برنامه از امروز</string>
 </resources>

@@ -15,6 +15,7 @@ import ir.adicom.kamkam.ui.home.HomeUiState
 import ir.adicom.kamkam.ui.home.LogItemUi
 import ir.adicom.kamkam.ui.home.PlanUi
 import ir.adicom.kamkam.ui.home.PostLogSheetUi
+import ir.adicom.kamkam.ui.plan.CreatePlanRoute
 import ir.adicom.kamkam.ui.splash.SplashScreen
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -33,7 +34,9 @@ fun AppNavHost(
                 onOpenCraving = {},
                 onOpenAddCustomTime = {  },
                 onOpenSettings = {},
-                onOpenCreatePlan = {  },
+                onOpenCreatePlan = {
+                    navController.navigate(Screen.CreatePlan.route)
+                },
             )
         }
         
@@ -49,6 +52,19 @@ fun AppNavHost(
                         }
                     }
                 }
+            )
+        }
+
+        composable(
+            Screen.CreatePlan.route
+        ) {
+            CreatePlanRoute(
+                onBack = {
+                    navController.popBackStack()
+                },
+                onCreated = {
+                    navController.popBackStack()
+                },
             )
         }
     }

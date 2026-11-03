@@ -8,3 +8,4 @@ import javax.inject.Inject
 class TriggerRepository @Inject constructor(private val dao: TriggerDao) {
     fun observeAll(): Flow<List<Trigger>> = dao.observeAll()
 }
+
