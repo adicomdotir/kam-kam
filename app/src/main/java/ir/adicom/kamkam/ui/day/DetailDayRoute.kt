@@ -17,6 +17,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ir.adicom.kamkam.R
@@ -31,9 +32,7 @@ fun DayDetailRoute(
     deletedLogId: Long? = null,
     onDeletedLogHandled: () -> Unit = {},
     modifier: Modifier = Modifier,
-    viewModel: DayDetailViewModel = viewModel(
-        factory = DayDetailViewModel.factory(LocalContext.current.applicationContext as Application)
-    ),
+    viewModel: DayDetailViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val snackbarHost = remember { SnackbarHostState() }

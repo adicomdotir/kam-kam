@@ -1,5 +1,7 @@
 package ir.adicom.kamkam.ui.report
 
+import ir.adicom.kamkam.data.ReportPeriod
+
 data class BarUi(
     val label: String,
     val sublabel: String,

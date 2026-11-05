@@ -247,7 +247,7 @@ private fun TodayHeader(onAddWithCustomTime: () -> Unit, modifier: Modifier = Mo
 }
 
 @Composable
-private fun LogRow(log: LogItemUi, onEdit: (Long) -> Unit, onDelete: (Long) -> Unit) {
+fun LogRow(log: LogItemUi, onEdit: (Long) -> Unit, onDelete: (Long) -> Unit) {
     Row(
         modifier = Modifier.fillMaxWidth().height(52.dp),
         verticalAlignment = Alignment.CenterVertically,

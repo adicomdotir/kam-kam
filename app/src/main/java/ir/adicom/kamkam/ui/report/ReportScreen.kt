@@ -43,6 +43,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import ir.adicom.kamkam.R
+import ir.adicom.kamkam.data.ReportPeriod
+import ir.adicom.kamkam.ui.home.toFa
+import ir.adicom.kamkam.ui.theme.KamkamTheme
 
 @Composable
 fun ReportScreen(

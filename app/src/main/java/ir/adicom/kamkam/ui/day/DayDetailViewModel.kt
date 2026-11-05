@@ -3,11 +3,13 @@ package ir.adicom.kamkam.ui.day
 import android.app.Application
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.adicom.kamkam.data.database.AppDatabase
 import ir.adicom.kamkam.data.repository.SmokeRepository
 import ir.adicom.kamkam.data.repository.TriggerRepository
@@ -22,17 +24,20 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.time.Clock
 import java.time.LocalDate
+import javax.inject.Inject
 
 data class DayDetailUiState(val title: String, val logs: List<LogItemUi>)
 
-class DayDetailViewModel(
-    epochDay: Long,
+@HiltViewModel
+class DayDetailViewModel @RequiresApi(Build.VERSION_CODES.O)
+@Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val smoke: SmokeRepository,
     triggers: TriggerRepository,
     formatter: HomeFormatter,
     private val clock: Clock,
 ) : ViewModel() {
-
+    private val epochDay = checkNotNull(savedStateHandle["logId"]) ?: 0L
     @RequiresApi(Build.VERSION_CODES.O)
     private val date = LocalDate.ofEpochDay(epochDay)
     @RequiresApi(Build.VERSION_CODES.O)
@@ -63,21 +68,5 @@ class DayDetailViewModel(
 
     fun onUndoDelete(id: Long) {
         viewModelScope.launch { smoke.restore(id) }
-    }
-
-    companion object {
-        fun factory(app: Application) = viewModelFactory {
-            initializer {
-                val handle = createSavedStateHandle()
-                val db = AppDatabase.get(app)
-                DayDetailViewModel(
-                    epochDay = handle.get<Long>("epochDay") ?: LocalDate.now().toEpochDay(),
-                    smoke = SmokeRepository(db.smokeLogDao()),
-                    triggers = TriggerRepository(db.triggerDao()),
-                    formatter = AndroidHomeFormatter(app),
-                    clock = Clock.systemDefaultZone(),
-                )
-            }
-        }
     }
 }

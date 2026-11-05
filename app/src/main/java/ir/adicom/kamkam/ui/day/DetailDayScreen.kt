@@ -23,11 +23,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.kamkam.R
-import com.example.kamkam.ui.home.LogItemUi
-import com.example.kamkam.ui.home.LogRow
-import com.example.kamkam.ui.home.toFa
-import com.example.kamkam.ui.theme.KamkamTheme
+import ir.adicom.kamkam.R
+import ir.adicom.kamkam.ui.home.LogItemUi
+import ir.adicom.kamkam.ui.home.LogRow
+import ir.adicom.kamkam.ui.home.toFa
+import ir.adicom.kamkam.ui.theme.KamkamTheme
 
 @Composable
 fun DayDetailScreen(

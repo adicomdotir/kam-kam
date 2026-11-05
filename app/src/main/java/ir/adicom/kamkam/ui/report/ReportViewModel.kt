@@ -1,13 +1,21 @@
 package ir.adicom.kamkam.ui.report
 
 import android.app.Application
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import dagger.hilt.android.lifecycle.HiltViewModel
+import ir.adicom.kamkam.data.PeriodCalendar
+import ir.adicom.kamkam.data.ReportPeriod
+import ir.adicom.kamkam.data.ReportWindow
+import ir.adicom.kamkam.data.countPerDay
 import ir.adicom.kamkam.data.entity.ReductionPlan
 import ir.adicom.kamkam.data.repository.PlanRepository
 import ir.adicom.kamkam.data.repository.SmokeRepository
+import ir.adicom.kamkam.data.startMillis
 import ir.adicom.kamkam.data.todayFlow
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,8 +27,11 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import java.time.Clock
 import java.time.LocalDate
+import javax.inject.Inject
 
-class ReportViewModel(
+@HiltViewModel
+class ReportViewModel @RequiresApi(Build.VERSION_CODES.O)
+@Inject constructor(
     private val smoke: SmokeRepository,
     private val plans: PlanRepository,
     private val formatter: ReportFormatter,
@@ -33,6 +44,7 @@ class ReportViewModel(
 
     private val selection = MutableStateFlow(Selection())
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @OptIn(ExperimentalCoroutinesApi::class)
     val uiState: StateFlow<ReportUiState?> =
         combine(selection, todayFlow(clock)) { s, today -> s to today }
@@ -46,11 +58,13 @@ class ReportViewModel(
             }
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun goalFor(date: LocalDate, plan: ReductionPlan?): Int? {
         val day = date.toEpochDay()
         return plan?.takeIf { day >= it.startEpochDay }?.targetForEpochDay(day)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun build(
         sel: Selection,
         today: LocalDate,
@@ -117,20 +131,4 @@ class ReportViewModel(
     fun onPeriodSelected(period: ReportPeriod) { selection.value = Selection(period, 0) }
     fun onOlder() = selection.update { it.copy(offset = it.offset + 1) }
     fun onNewer() = selection.update { it.copy(offset = (it.offset - 1).coerceAtLeast(0)) }
-
-    companion object {
-        fun factory(app: Application) = viewModelFactory {
-            initializer {
-                val db = AppDatabase.get(app)
-                val clock = Clock.systemDefaultZone()
-                ReportViewModel(
-                    smoke = SmokeRepository(db.smokeLogDao()),
-                    plans = PlanRepository(db.reductionPlanDao()),
-                    formatter = AndroidReportFormatter(app, clock.zone),
-                    calendar = PeriodCalendar(clock.zone),
-                    clock = clock,
-                )
-            }
-        }
-    }
 }

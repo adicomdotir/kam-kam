@@ -18,6 +18,8 @@ class SmokeRepository @Inject constructor(private val dao: SmokeLogDao) {
     fun observeBetween(from: Long, to: Long): Flow<List<SmokeLog>> = dao.observeBetween(from, to)
     fun observeLastTimestamp(): Flow<Long?> = dao.observeLastTimestamp()
 
+    fun observeTimestampsBetween(from: Long, to: Long): Flow<List<Long>> = dao.observeTimestampsBetween(from, to)
+
     suspend fun log(timestamp: Long): Long = dao.insert(SmokeLog(timestamp = timestamp))
 
     suspend fun getById(id: Long): SmokeLog? = dao.getById(id)

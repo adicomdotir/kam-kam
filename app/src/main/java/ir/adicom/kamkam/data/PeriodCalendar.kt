@@ -2,6 +2,7 @@ package ir.adicom.kamkam.data
 
 import android.icu.util.Calendar
 import android.icu.util.TimeZone
+import android.icu.util.ULocale
 import android.os.Build
 import androidx.annotation.RequiresApi
 import java.time.DayOfWeek
@@ -65,7 +66,10 @@ class PeriodCalendar(private val zone: ZoneId) {
     /** اولین روز ماه شمسیِ [date] به‌علاوه‌ی shiftMonths ماه */
     @RequiresApi(Build.VERSION_CODES.O)
     private fun monthStart(date: LocalDate, shiftMonths: Int): LocalDate {
-        val cal = PersianCalendar(TimeZone.getTimeZone(zone.id))
+        val cal = Calendar.getInstance(
+            TimeZone.getTimeZone(zone.id),
+            ULocale("fa_IR@calendar=persian")
+        )
         cal.timeInMillis = date.startMillis(zone)
         cal.set(Calendar.DAY_OF_MONTH, 1)
         cal.add(Calendar.MONTH, shiftMonths)
