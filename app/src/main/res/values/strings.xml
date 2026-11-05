@@ -76,4 +76,26 @@
     <string name="day_yesterday">دیروز</string>
     <string name="time_picker_ok">تأیید</string>
     <string name="time_picker_cancel">انصراف</string>
+
+    <string name="nav_home">خانه</string>
+    <string name="nav_report">گزارش</string>
+
+    <string name="report_title">گزارش</string>
+    <string name="report_tab_daily">روزانه</string>
+    <string name="report_tab_weekly">هفتگی</string>
+    <string name="report_tab_monthly">ماهانه</string>
+    <string name="report_older">بازه‌ی قبل</string>
+    <string name="report_newer">بازه‌ی بعد</string>
+    <string name="report_range_same_month">%1$s تا %2$s %3$s</string>
+    <string name="report_range_cross">%1$s تا %2$s</string>
+    <string name="report_stat_total">مجموع بازه</string>
+    <string name="report_stat_average">میانگین روزانه</string>
+    <string name="report_stat_in_goal">روز در هدف</string>
+    <string name="report_in_goal_value">%1$s از %2$s</string>
+    <string name="report_goal_legend">خط‌چین: هدف روزانه</string>
+    <string name="report_bar_desc">%1$s: %2$s نخ</string>
+    <string name="report_days_title">جزئیات روزها</string>
+
+    <string name="day_detail_count">%1$s نخ</string>
+    <string name="day_detail_empty">در این روز ثبتی وجود ندارد.</string>
 </resources>
