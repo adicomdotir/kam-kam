@@ -28,6 +28,8 @@ fun HomeRoute(
     onOpenCreatePlan: () -> Unit,
     deletedLogId: Long? = null,
     onDeletedLogHandled: () -> Unit = {},
+    cravingResisted: Boolean = false,
+    onCravingHandled: () -> Unit = {},
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
@@ -35,6 +37,14 @@ fun HomeRoute(
     val snackbarHost = remember { SnackbarHostState() }
     val deletedMessage = stringResource(R.string.home_log_deleted)
     val undoLabel = stringResource(R.string.home_undo)
+    val resistedMessage = stringResource(R.string.home_craving_resisted)
+
+    // بعد از «هوسم رد شد» یک پیام تشویق ملایم
+    LaunchedEffect(cravingResisted) {
+        if (!cravingResisted) return@LaunchedEffect
+        snackbarHost.showSnackbar(message = resistedMessage, duration = SnackbarDuration.Short)
+        onCravingHandled()
+    }
 
     // حذفی که در صفحه‌ی ویرایش انجام شده؛ همان Snackbar بازگردانی
     LaunchedEffect(deletedLogId) {

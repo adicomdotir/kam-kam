@@ -98,4 +98,19 @@
 
     <string name="day_detail_count">%1$s نخ</string>
     <string name="day_detail_empty">در این روز ثبتی وجود ندارد.</string>
+
+    <string name="craving_title">هوس مثل موج است</string>
+    <string name="craving_subtitle">می‌آید و می‌رود. معمولاً کمتر از ۱۰ دقیقه طول می‌کشد.</string>
+    <string name="craving_time_left">تا پایان تایمر</string>
+    <string name="craving_breath_in">دم عمیق بکش</string>
+    <string name="craving_breath_hold">نگه دار</string>
+    <string name="craving_breath_out">آرام بیرون بده</string>
+    <string name="craving_breath_pattern">۴ ثانیه دم · ۲ نگه‌دار · ۶ ثانیه بازدم</string>
+    <string name="craving_trigger_question">چه چیزی باعثش شد؟ (اختیاری)</string>
+    <string name="craving_resisted">هوسم رد شد</string>
+    <string name="craving_smoked">سیگار کشیدم</string>
+    <string name="craving_extend">۱۰ دقیقه‌ی دیگر صبر می‌کنم</string>
+    <string name="craving_finished_title">۱۰ دقیقه گذشت</string>
+    <string name="craving_finished_body">هنوز هوس داری؟ هر جوابی بدهی ثبت می‌شود و قضاوتی در کار نیست.</string>
+    <string name="home_craving_resisted">یک هوس را رد کردی. آفرین!</string>
 </resources>

@@ -29,6 +29,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import ir.adicom.kamkam.R
+import ir.adicom.kamkam.ui.craving.CravingRoute
 import ir.adicom.kamkam.ui.day.DayDetailRoute
 import ir.adicom.kamkam.ui.edit.EditLogRoute
 import ir.adicom.kamkam.ui.home.HomeRoute
@@ -44,6 +45,8 @@ private val tabs = listOf(
     Tab(Screen.Home.route, R.string.nav_home, Icons.Filled.Home),
     Tab(Screen.Report.route, R.string.nav_report, Icons.AutoMirrored.Filled.List),
 )
+
+private const val KEY_CRAVING_RESISTED = "craving_resisted"
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
@@ -91,7 +94,9 @@ fun AppNavHost(
                     onOpenEdit = {
                         navController.navigate(Screen.EditLog.createRoute(it))
                     },
-                    onOpenCraving = {},
+                    onOpenCraving = {
+                        navController.navigate(Screen.Craving.route)
+                    },
                     onOpenAddCustomTime = {
                         navController.navigate(Screen.EditLog.createRoute(0L))
                     },
@@ -164,6 +169,18 @@ fun AppNavHost(
                         )
                         navController.popBackStack()
                     }
+                )
+            }
+
+            composable(
+                Screen.Craving.route
+            ) {
+                CravingRoute(
+                    onClose = { navController.popBackStack() },
+                    onDone = { resisted ->
+                        if (resisted) navController.previousBackStackEntry?.savedStateHandle?.set(KEY_CRAVING_RESISTED, true)
+                        navController.popBackStack()
+                    },
                 )
             }
         }
