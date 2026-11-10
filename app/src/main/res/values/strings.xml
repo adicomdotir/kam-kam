@@ -113,4 +113,9 @@
     <string name="craving_finished_title">۱۰ دقیقه گذشت</string>
     <string name="craving_finished_body">هنوز هوس داری؟ هر جوابی بدهی ثبت می‌شود و قضاوتی در کار نیست.</string>
     <string name="home_craving_resisted">یک هوس را رد کردی. آفرین!</string>
+
+    <string name="home_extend_title">%1$s روز است از هدف بالاتری</string>
+    <string name="home_extend_body">این شکست نیست؛ بعضی مرحله‌ها بیشتر وقت لازم دارند. مرحله را از امروز دوباره شروع کنیم؟ هدفت همان می‌ماند و %1$s روز دیگر وقت داری.</string>
+    <string name="home_extend_confirm">بله، دوباره شروع کنیم</string>
+    <string name="home_extend_dismiss">الان نه</string>
 </resources>
