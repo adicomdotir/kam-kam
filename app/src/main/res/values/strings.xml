@@ -60,8 +60,8 @@
     <string name="plan_preview">پیش‌نمایش</string>
     <string name="plan_weeks_to_goal">حدود %1$s هفته تا هدف</string>
     <string name="plan_stage_row">مرحله‌ی %1$s</string>
-    <string name="plan_extend_note">هر وقت لازم شد، می‌توانی مرحله را تمدید کنی.</string>
     <string name="plan_start">شروع برنامه از امروز</string>
+    <string name="plan_extend_note">xsjkadsjflsjafljs</string>
 
     <string name="edit_log_title">ویرایش ثبت</string>
     <string name="add_log_title">افزودن ثبت</string>
@@ -118,4 +118,21 @@
     <string name="home_extend_body">این شکست نیست؛ بعضی مرحله‌ها بیشتر وقت لازم دارند. مرحله را از امروز دوباره شروع کنیم؟ هدفت همان می‌ماند و %1$s روز دیگر وقت داری.</string>
     <string name="home_extend_confirm">بله، دوباره شروع کنیم</string>
     <string name="home_extend_dismiss">الان نه</string>
+
+    <string name="widget_label">کم‌کم · ثبت سریع</string>
+    <string name="widget_description">ثبت یک نخ بدون باز کردن اپ</string>
+    <string name="widget_today">امروز</string>
+    <string name="widget_of_target_short">از %1$s</string>
+    <string name="widget_of_target_wide">از %1$s نخ</string>
+    <string name="widget_last">آخرین نخ %1$s</string>
+    <string name="widget_none_yet">هنوز نخی ثبت نشده</string>
+
+    <string name="report_hourly_title">ساعت‌های پرتکرار</string>
+    <string name="report_hourly_insight">بیشتر نخ‌هایت بین ساعت %1$s است.</string>
+    <string name="report_hourly_not_enough">هنوز داده‌ی کافی نیست؛ چند روز دیگر ثبت کن.</string>
+    <string name="report_hourly_empty">در این بازه نخی ثبت نشده.</string>
+    <string name="report_hourly_cell_desc">ساعت %1$s تا %2$s: %3$s نخ</string>
+    <string name="report_percent">%1$s٪</string>
+    <string name="report_hourly_legend_low">کم</string>
+    <string name="report_hourly_legend_high">زیاد</string>
 </resources>

@@ -13,6 +13,7 @@ import ir.adicom.kamkam.data.ReportPeriod
 import ir.adicom.kamkam.data.ReportWindow
 import ir.adicom.kamkam.data.countPerDay
 import ir.adicom.kamkam.data.entity.ReductionPlan
+import ir.adicom.kamkam.data.hourCounts
 import ir.adicom.kamkam.data.repository.PlanRepository
 import ir.adicom.kamkam.data.repository.SmokeRepository
 import ir.adicom.kamkam.data.startMillis
@@ -53,7 +54,7 @@ class ReportViewModel @RequiresApi(Build.VERSION_CODES.O)
                 val from = window.start.startMillis(clock.zone)
                 val to = window.endExclusive.startMillis(clock.zone)
                 combine(smoke.observeTimestampsBetween(from, to), plans.observeActive()) { ts, plan ->
-                    build(sel, today, window, countPerDay(ts, clock.zone), plan)
+                    build(sel, today, window, countPerDay(ts, clock.zone), plan, buildHourlyUi(hourCounts(ts, clock.zone)))
                 }
             }
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
@@ -71,6 +72,7 @@ class ReportViewModel @RequiresApi(Build.VERSION_CODES.O)
         window: ReportWindow,
         perDay: Map<LocalDate, Int>,
         plan: ReductionPlan?,
+        hourly: HourlyUi,
     ): ReportUiState {
         val bars = window.buckets.map { b ->
             val value = b.days().sumOf { perDay[it] ?: 0 }
@@ -125,6 +127,7 @@ class ReportViewModel @RequiresApi(Build.VERSION_CODES.O)
             inGoal = inGoal,
             bars = bars,
             days = days,
+            hourly = hourly,
         )
     }
 
