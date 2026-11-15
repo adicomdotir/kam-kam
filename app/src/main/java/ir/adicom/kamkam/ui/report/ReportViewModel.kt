@@ -13,11 +13,15 @@ import ir.adicom.kamkam.data.ReportPeriod
 import ir.adicom.kamkam.data.ReportWindow
 import ir.adicom.kamkam.data.countPerDay
 import ir.adicom.kamkam.data.entity.ReductionPlan
+import ir.adicom.kamkam.data.entity.Trigger
 import ir.adicom.kamkam.data.hourCounts
 import ir.adicom.kamkam.data.repository.PlanRepository
 import ir.adicom.kamkam.data.repository.SmokeRepository
+import ir.adicom.kamkam.data.repository.TriggerRepository
 import ir.adicom.kamkam.data.startMillis
 import ir.adicom.kamkam.data.todayFlow
+import ir.adicom.kamkam.ui.home.AndroidHomeFormatter
+import ir.adicom.kamkam.ui.home.HomeFormatter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -35,6 +39,8 @@ class ReportViewModel @RequiresApi(Build.VERSION_CODES.O)
 @Inject constructor(
     private val smoke: SmokeRepository,
     private val plans: PlanRepository,
+    private val triggers: TriggerRepository,
+    private val triggerLabel: HomeFormatter,
     private val formatter: ReportFormatter,
     private val calendar: PeriodCalendar,
     private val clock: Clock,
@@ -53,8 +59,17 @@ class ReportViewModel @RequiresApi(Build.VERSION_CODES.O)
                 val window = calendar.window(sel.period, today, sel.offset)
                 val from = window.start.startMillis(clock.zone)
                 val to = window.endExclusive.startMillis(clock.zone)
-                combine(smoke.observeTimestampsBetween(from, to), plans.observeActive()) { ts, plan ->
-                    build(sel, today, window, countPerDay(ts, clock.zone), plan, buildHourlyUi(hourCounts(ts, clock.zone)))
+                combine(
+                    smoke.observeTimestampsBetween(from, to),
+                    plans.observeActive(),
+                    smoke.observeTriggerCounts(from, to),
+                    triggers.observeAll(),
+                ) { ts, plan, triggerCounts, allTriggers ->
+                    build(
+                        sel, today, window, countPerDay(ts, clock.zone), plan,
+                        buildHourlyUi(hourCounts(ts, clock.zone)),
+                        buildTriggersUi(triggerCounts, allTriggers, ts.size, triggerLabel::triggerLabel),
+                    )
                 }
             }
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
@@ -73,6 +88,7 @@ class ReportViewModel @RequiresApi(Build.VERSION_CODES.O)
         perDay: Map<LocalDate, Int>,
         plan: ReductionPlan?,
         hourly: HourlyUi,
+        triggersUi: TriggersUi,
     ): ReportUiState {
         val bars = window.buckets.map { b ->
             val value = b.days().sumOf { perDay[it] ?: 0 }
@@ -85,11 +101,13 @@ class ReportViewModel @RequiresApi(Build.VERSION_CODES.O)
                     goal = goalFor(b.start, plan),
                     isCurrent = isCurrent,
                 )
+
                 ReportPeriod.WEEKLY -> BarUi(
                     label = formatter.dayNumber(b.start),
                     sublabel = formatter.monthName(b.start),
                     value = value, goal = null, isCurrent = isCurrent,
                 )
+
                 ReportPeriod.MONTHLY -> BarUi(
                     label = formatter.monthName(b.start),
                     sublabel = "",
@@ -100,15 +118,21 @@ class ReportViewModel @RequiresApi(Build.VERSION_CODES.O)
 
         // فقط روزهایی که گذشته‌اند یا امروزند در میانگین و «روز در هدف» حساب می‌شوند.
         val lastCounted = minOf(window.endExclusive.minusDays(1), today)
-        val elapsedDays = window.buckets.flatMap { it.days().toList() }.filter { !it.isAfter(lastCounted) }
+        val elapsedDays =
+            window.buckets.flatMap { it.days().toList() }.filter { !it.isAfter(lastCounted) }
         val total = bars.sumOf { it.value }
         val average = total.toDouble() / elapsedDays.size.coerceAtLeast(1)
 
-        val goalDays = elapsedDays.mapNotNull { d -> goalFor(d, plan)?.let { g -> (perDay[d] ?: 0) <= g } }
-        val inGoal = if (goalDays.isEmpty()) null else InGoalUi(goalDays.count { it }, goalDays.size)
+        val goalDays =
+            elapsedDays.mapNotNull { d -> goalFor(d, plan)?.let { g -> (perDay[d] ?: 0) <= g } }
+        val inGoal =
+            if (goalDays.isEmpty()) null else InGoalUi(goalDays.count { it }, goalDays.size)
 
         val lastBucket = window.buckets.last()
-        val rangeEnd = if (sel.period == ReportPeriod.MONTHLY) lastBucket.start else window.endExclusive.minusDays(1)
+        val rangeEnd =
+            if (sel.period == ReportPeriod.MONTHLY) lastBucket.start else window.endExclusive.minusDays(
+                1
+            )
         val rangeTitle = formatter.range(sel.period, window.start, rangeEnd)
 
         val days = if (sel.period == ReportPeriod.DAILY) {
@@ -128,10 +152,14 @@ class ReportViewModel @RequiresApi(Build.VERSION_CODES.O)
             bars = bars,
             days = days,
             hourly = hourly,
+            triggers = triggersUi
         )
     }
 
-    fun onPeriodSelected(period: ReportPeriod) { selection.value = Selection(period, 0) }
+    fun onPeriodSelected(period: ReportPeriod) {
+        selection.value = Selection(period, 0)
+    }
+
     fun onOlder() = selection.update { it.copy(offset = it.offset + 1) }
     fun onNewer() = selection.update { it.copy(offset = (it.offset - 1).coerceAtLeast(0)) }
 }

@@ -102,6 +102,8 @@ fun ReportScreen(
 
         HeatmapCard(state.hourly, state.rangeTitle)
 
+        TriggersCard(state.triggers, state.rangeTitle)
+
         if (state.days.isNotEmpty()) {
             Text(
                 stringResource(R.string.report_days_title),

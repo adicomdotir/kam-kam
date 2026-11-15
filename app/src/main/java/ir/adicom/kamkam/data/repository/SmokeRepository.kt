@@ -4,6 +4,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import ir.adicom.kamkam.data.SuggestedBaseline
 import ir.adicom.kamkam.data.dao.SmokeLogDao
+import ir.adicom.kamkam.data.dao.TriggerCount
 import ir.adicom.kamkam.data.entity.SmokeLog
 import ir.adicom.kamkam.data.startMillis
 import ir.adicom.kamkam.data.suggestBaseline
@@ -17,13 +18,10 @@ import javax.inject.Inject
 class SmokeRepository @Inject constructor(private val dao: SmokeLogDao) {
     fun observeBetween(from: Long, to: Long): Flow<List<SmokeLog>> = dao.observeBetween(from, to)
     fun observeLastTimestamp(): Flow<Long?> = dao.observeLastTimestamp()
-
     fun observeTimestampsBetween(from: Long, to: Long): Flow<List<Long>> = dao.observeTimestampsBetween(from, to)
-
+    fun observeTriggerCounts(from: Long, to: Long): Flow<List<TriggerCount>> = dao.observeTriggerCounts(from, to)
     suspend fun log(timestamp: Long): Long = dao.insert(SmokeLog(timestamp = timestamp))
-
     suspend fun getById(id: Long): SmokeLog? = dao.getById(id)
-
     /** id == 0 یعنی ثبت جدید */
     suspend fun save(log: SmokeLog): Long =
         if (log.id == 0L) dao.insert(log) else { dao.update(log); log.id }

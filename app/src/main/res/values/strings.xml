@@ -61,7 +61,6 @@
     <string name="plan_weeks_to_goal">حدود %1$s هفته تا هدف</string>
     <string name="plan_stage_row">مرحله‌ی %1$s</string>
     <string name="plan_start">شروع برنامه از امروز</string>
-    <string name="plan_extend_note">xsjkadsjflsjafljs</string>
 
     <string name="edit_log_title">ویرایش ثبت</string>
     <string name="add_log_title">افزودن ثبت</string>
@@ -135,4 +134,13 @@
     <string name="report_percent">%1$s٪</string>
     <string name="report_hourly_legend_low">کم</string>
     <string name="report_hourly_legend_high">زیاد</string>
+
+    <string name="report_triggers_title">محرک‌های پرتکرار</string>
+    <string name="report_triggers_insight">شایع‌ترین محرکت %1$s است؛ %2$s٪ نخ‌هایت.</string>
+    <string name="report_triggers_hint">با ثبت محرک بعد از هر نخ، این گزارش دقیق‌تر می‌شود.</string>
+    <string name="report_triggers_other">سایر</string>
+    <string name="report_triggers_untagged">بدون برچسب</string>
+    <string name="report_trigger_count">%1$s (%2$s٪)</string>
+    <string name="report_trigger_row_desc">%1$s: %2$s نخ، %3$s٪</string>
+    <string name="plan_extend_note">xxxxxxsdfsdf</string>
 </resources>
