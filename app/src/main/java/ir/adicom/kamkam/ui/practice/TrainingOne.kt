@@ -19,7 +19,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,8 +26,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun TrainingOne(modifier: Modifier = Modifier) {
-    Box(
+fun TrainingOne() {
+
+    Column(
         modifier = Modifier
             .width(240.dp)
             .border(
@@ -36,43 +36,48 @@ fun TrainingOne(modifier: Modifier = Modifier) {
                 Color.LightGray,
                 shape = RoundedCornerShape(16.dp)
             )
-            .padding(24.dp)
+            .padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(
-            modifier = Modifier.align(Alignment.Center),
-            horizontalAlignment = Alignment.CenterHorizontally
+        Box(
+            Modifier
+                .size(80.dp)
+                .background(
+                    color = Color(0xFFEEEDFE),
+                    shape = CircleShape
+                )
+                .border(
+                    width = 2.dp,
+                    color = Color(0xFF675EC0),
+                    shape = CircleShape
+                ),
+            contentAlignment = Alignment.Center
         ) {
-            Box(
-                modifier = Modifier
-                    .size(80.dp)
-                    .clip(CircleShape)
-                    .background(Color(0xFFEEEDFE))
-                    .border(2.dp, Color(0xFF675EC0), shape = CircleShape),
-                contentAlignment = Alignment.Center
-            ) {
-                Text("A", fontSize = 28.sp)
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-            Text("John Doe", fontSize = 20.sp, fontWeight = FontWeight.Medium)
-            Spacer(modifier = Modifier.height(4.dp))
-            Text("Android developer", fontSize = 14.sp, color = Color.Gray)
-            Spacer(modifier = Modifier.height(24.dp))
-            Box(
-                modifier = Modifier
-                    .height(40.dp)
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(size = 20.dp))
-                    .border(
-                        1.dp, Color(0xff80A8D1),
-                        RoundedCornerShape(20.dp)
-                    )
-                    .background(Color(0xFFE6F1FB)),
-                contentAlignment = Alignment.Center
+            Text("A", fontSize = 28.sp)
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        Text("John Doe", fontSize = 20.sp, fontWeight = FontWeight.Medium)
+        Spacer(modifier = Modifier.height(4.dp))
+        Text("Android developer", fontSize = 14.sp, color = Color.Gray)
+        Spacer(modifier = Modifier.height(24.dp))
+        Box(
+            modifier = Modifier
+                .height(40.dp)
+                .fillMaxWidth()
+                .background(
+                    color = Color(0xFFE6F1FB),
+                    shape = RoundedCornerShape(size = 20.dp)
+                )
+                .border(
+                    width = 1.dp,
+                    color = Color(0xff80A8D1),
+                    shape = RoundedCornerShape(20.dp)
+                ),
+            contentAlignment = Alignment.Center
 
-            ) {
-                Column {
-                    Text("Follow", color = Color(0xFF0C447C), fontSize = 14.sp)
-                }
+        ) {
+            Column {
+                Text("Follow", color = Color(0xFF0C447C), fontSize = 14.sp)
             }
         }
     }
