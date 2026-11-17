@@ -55,12 +55,11 @@ fun TrainingTwo() {
         horizontalAlignment = Alignment.Start
     ) {
         Box(
-            modifier = Modifier.height(48.dp),
-            contentAlignment = Alignment.Center
+            modifier = Modifier.height(48.dp).padding(start = 16.dp),
+            contentAlignment = Alignment.CenterStart
         ) {
             Text(
                 "Settings", fontSize = 22.sp,
-                modifier = Modifier.padding(start = 16.dp)
             )
         }
         ItemRow(
@@ -148,12 +147,11 @@ fun ItemRow(
             )
         }
         Spacer(Modifier.width(16.dp))
-        Column() {
+        Column(modifier = Modifier.weight(1f)) {
             Text(title, fontSize = 16.sp)
             Spacer(Modifier.height(2.dp))
             Text(subTitle, fontSize = 13.sp, color = Color.Gray)
         }
-        Spacer(Modifier.weight(1f))
         trailing()
         Spacer(Modifier.width(16.dp))
     }
