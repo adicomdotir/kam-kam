@@ -1,5 +1,6 @@
 package ir.adicom.kamkam.ui.practice
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +20,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -62,7 +65,7 @@ fun TrainingThree() {
                     .size(44.dp, 24.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Text("-20%", color = Color(0xffFF7F50))
+                Text("-20%", color = Color(0xffFF7F50), fontSize = 12.sp, maxLines = 1)
             }
             Box(
                 Modifier
@@ -87,37 +90,29 @@ fun TrainingThree() {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                Icon(Icons.Default.Star, "", tint = AmberColor)
+                Icon(Icons.Default.Star, "", tint = AmberColor, modifier = Modifier.size(16.dp))
                 Text("4.8 (120)", color = Color.Gray, fontSize = 13.sp)
             }
             Spacer(Modifier.height(12.dp))
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Text("$89", fontSize = 20.sp, fontWeight = FontWeight.Bold)
                 Text("$112", color = Color.Gray, fontSize = 14.sp, textDecoration = TextDecoration.LineThrough)
             }
             Spacer(Modifier.height(16.dp))
-            Box(
-                modifier = Modifier
-                    .height(44.dp)
-                    .fillMaxWidth()
-                    .background(
-                        color = Color(0xFFE6F1FB),
-                        shape = RoundedCornerShape(size = 12.dp)
-                    )
-                    .border(
-                        width = 1.dp,
-                        color = Color(0xff80A8D1),
-                        shape = RoundedCornerShape(12.dp)
-                    ),
-                contentAlignment = Alignment.Center
-
+            Button(
+                onClick = { },
+                modifier = Modifier.fillMaxWidth().height(44.dp),
+                shape = RoundedCornerShape(12.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFFE6F1FB),
+                    contentColor = Color(0xFF0C447C)
+                ),
+                border = BorderStroke(1.dp, Color(0xff80A8D1))
             ) {
-                Column {
-                    Text("Add to cart", color = Color(0xFF0C447C), fontSize = 14.sp)
-                }
+                Text("Add to cart", fontSize = 14.sp)
             }
         }
     }
