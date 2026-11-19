@@ -59,3 +59,6 @@ val DarkError = Color(0xFFFFB4AB)
 val DarkOnError = Color(0xFF690005)
 val DarkErrorContainer = Color(0xFF93000A)
 val DarkOnErrorContainer = Color(0xFFFFDAD6)
+
+val PurpleLight = Color(0xFFEEEDFE)
+val PurpleDark = Color(0xFF645BBE)
