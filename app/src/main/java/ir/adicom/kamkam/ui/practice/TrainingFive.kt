@@ -1,5 +1,8 @@
 package ir.adicom.kamkam.ui.practice
 
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -31,11 +34,17 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.LineHeightStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -94,6 +103,11 @@ fun TrainingFive() {
             item {
                 Spacer(Modifier.height(16.dp))
                 QuickItems()
+            }
+            item {
+                Spacer(Modifier.height(16.dp))
+                SpendingChart()
+                Spacer(Modifier.height(16.dp))
             }
             items(transactions) {
                 TransactionRow(it)
@@ -259,6 +273,47 @@ fun FiveBottomBar() {
     }
 }
 
+@Composable
+fun SpendingChart(
+    values: List<Float> = listOf(30f, 52f, 40f, 84f, 48f, 24f, 36f),
+    days: List<String> = listOf("M", "T", "W", "T", "F", "S", "S"),
+    selected: Int = 3
+) {
+    val max = values.max()
+    val progress = remember { Animatable(0f) }
+    LaunchedEffect(Unit) { progress.animateTo(1f, tween(800)) }
+
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .border(1.dp, Color.LightGray, RoundedCornerShape(16.dp))
+            .padding(16.dp)
+    ) {
+        Canvas(Modifier.fillMaxWidth().height(76.dp)) {
+            val barW = 20.dp.toPx()
+            val gap = (size.width - barW * values.size) / (values.size - 1)
+            values.forEachIndexed { i, v ->
+                val h = size.height * (v / max) * progress.value
+                drawRoundRect(
+                    color = if (i == selected) Color(0xFF7F77DD) else Color(0xFFCECBF6),
+                    topLeft = Offset(i * (barW + gap), size.height - h),
+                    size = Size(barW, h),
+                    cornerRadius = CornerRadius(6.dp.toPx())
+                )
+            }
+        }
+        Spacer(Modifier.height(8.dp))
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+            days.forEach {
+                Text(
+                    it, fontSize = 11.sp, color = Color.Gray,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.width(20.dp)
+                )
+            }
+        }
+    }
+}
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
