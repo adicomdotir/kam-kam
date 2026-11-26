@@ -22,9 +22,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -91,7 +94,7 @@ fun PracticeTwo() {
                         .background(PurpleDark, CircleShape)
                 )
             },
-            track = {sliderState ->
+            track = { sliderState ->
                 SliderDefaults.Track(
                     sliderState = sliderState,
                     modifier = Modifier.height(4.dp),
@@ -111,6 +114,37 @@ fun PracticeTwo() {
         ) {
             Text("1:24", fontSize = 12.sp, color = Color.Gray)
             Text("3:45", fontSize = 12.sp, color = Color.Gray)
+        }
+        Spacer(Modifier.height(24.dp))
+        Row(
+            Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceAround
+        ) {
+            Box(
+                Modifier
+                    .size(48.dp)
+                    .border(1.dp, Color.Black, CircleShape),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(Icons.AutoMirrored.Default.ArrowBack, "")
+            }
+            Box(
+                Modifier
+                    .size(64.dp)
+                    .border(1.dp, Color.Black, CircleShape),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(Icons.Default.PlayArrow, "")
+            }
+            Box(
+                Modifier
+                    .size(48.dp)
+                    .border(1.dp, Color.Black, CircleShape),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(Icons.AutoMirrored.Default.ArrowForward, "")
+            }
         }
     }
 }
