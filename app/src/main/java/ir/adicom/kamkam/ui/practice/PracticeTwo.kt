@@ -26,6 +26,8 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Warning
@@ -41,6 +43,7 @@ import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -62,11 +65,17 @@ import androidx.compose.ui.unit.sp
 import ir.adicom.kamkam.ui.theme.PurpleDark
 import ir.adicom.kamkam.ui.theme.PurpleLight
 
+fun formatTime(seconds: Int): String = "%d:%02d".format(seconds / 60, seconds % 60)
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PracticeTwo() {
+    val total = 225f
+    var position by remember { mutableFloatStateOf(84f) }
+    var isPlaying by remember { mutableStateOf(false) }
+
     Column(
-        Modifier.padding(24.dp),
+        Modifier.fillMaxSize().padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(
@@ -75,25 +84,20 @@ fun PracticeTwo() {
                 .background(PurpleLight, RoundedCornerShape(20.dp))
                 .border(2.dp, PurpleDark, RoundedCornerShape(20.dp)),
             contentAlignment = Alignment.Center
-        ) {
-            Text("Album art", color = PurpleDark)
-        }
+        ) { Text("Album art", color = PurpleDark) }
+
         Spacer(Modifier.height(24.dp))
-        Text("Midnight city", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+        Text("Midnight City", fontSize = 20.sp, fontWeight = FontWeight.Bold)
         Spacer(Modifier.height(4.dp))
         Text("M83", fontSize = 14.sp, color = Color.Gray)
         Spacer(Modifier.height(24.dp))
+
         Slider(
-            5f,
-            onValueChange = {},
-            valueRange = 0f..20f,
-            thumb = {
-                Box(
-                    modifier = Modifier
-                        .size(16.dp)
-                        .background(PurpleDark, CircleShape)
-                )
-            },
+            value = position,
+            onValueChange = { position = it },
+            valueRange = 0f..total,
+            modifier = Modifier.fillMaxWidth(),
+            thumb = { Box(Modifier.size(16.dp).background(PurpleDark, CircleShape)) },
             track = { sliderState ->
                 SliderDefaults.Track(
                     sliderState = sliderState,
@@ -107,44 +111,44 @@ fun PracticeTwo() {
                 )
             }
         )
-        Spacer(Modifier.height(24.dp))
-        Row(
-            Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text("1:24", fontSize = 12.sp, color = Color.Gray)
-            Text("3:45", fontSize = 12.sp, color = Color.Gray)
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+            Text(formatTime(position.toInt()), fontSize = 12.sp, color = Color.Gray)
+            Text(formatTime(total.toInt()), fontSize = 12.sp, color = Color.Gray)
         }
+
         Spacer(Modifier.height(24.dp))
         Row(
             Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceAround
+            horizontalArrangement = Arrangement.spacedBy(24.dp, Alignment.CenterHorizontally)
         ) {
-            Box(
-                Modifier
+            IconButton(
+                onClick = { position = 0f },
+                modifier = Modifier
                     .size(48.dp)
-                    .border(1.dp, Color.Black, CircleShape),
-                contentAlignment = Alignment.Center
+                    .background(Color.White, CircleShape)
+                    .border(1.dp, Color.LightGray, CircleShape)
+            ) { Icon(Icons.Default.KeyboardArrowLeft, "Previous") }
+
+            IconButton(
+                onClick = { isPlaying = !isPlaying },
+                modifier = Modifier.size(64.dp).background(PurpleDark, CircleShape)
             ) {
-                Icon(Icons.AutoMirrored.Default.ArrowBack, "")
+                Icon(
+                    if (isPlaying) Icons.Default.PlayArrow else Icons.Default.PlayArrow,
+                    contentDescription = if (isPlaying) "Pause" else "Play",
+                    tint = Color.White,
+                    modifier = Modifier.size(28.dp)
+                )
             }
-            Box(
-                Modifier
-                    .size(64.dp)
-                    .border(1.dp, Color.Black, CircleShape),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(Icons.Default.PlayArrow, "")
-            }
-            Box(
-                Modifier
+
+            IconButton(
+                onClick = { position = total },
+                modifier = Modifier
                     .size(48.dp)
-                    .border(1.dp, Color.Black, CircleShape),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(Icons.AutoMirrored.Default.ArrowForward, "")
-            }
+                    .background(Color.White, CircleShape)
+                    .border(1.dp, Color.LightGray, CircleShape)
+            ) { Icon(Icons.Default.KeyboardArrowRight, "Next") }
         }
     }
 }
